@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpe | Diagnóstico de Crescimento e Implementação de Estratégias</title>
+<meta name="description" content="Mapeamos sua operação, encontramos o gargalo que trava suas vendas e implementamos as estratégias certas. +138% de receita. Agende o diagnóstico gratuito.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg-base: #050505;
+    --bg-surface: #0a0a0a;
+    --bg-surface-hover: #111111;
+    --border-color: #222222;
+    
+    --text-primary: #ffffff;
+    --text-secondary: #999999;
+    --text-muted: #666666;
+    
+    --brand-primary: #1478BE;
+    --brand-glow: rgba(20, 120, 190, 0.4);
+    --brand-light: #5bb3f0;
+    
+    --font-heading: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; background: var(--bg-base); color: var(--text-primary); font-family: var(--font-body); }
+  body { overflow-x: hidden; line-height: 1.6; }
+  
+  ::selection { background: var(--brand-primary); color: #fff; }
+
+  /* UTILITIES */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; }
+  .text-brand { color: var(--brand-light); }
+  .flex { display: flex; }
+  .items-center { align-items: center; }
+  .justify-between { justify-content: space-between; }
+  .gap-4 { gap: 1rem; } .gap-8 { gap: 2rem; }
+  .grid { display: grid; }
+  .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+  /* BUTTONS */
+  .btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px; border-radius: 8px; font-weight: 500; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; font-family: var(--font-body); }
+  .btn-primary { background: #fff; color: #000; }
+  .btn-primary:hover { background: #eee; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,255,255,0.15); }
+  .btn-brand { background: var(--brand-primary); color: #fff; box-shadow: 0 0 20px var(--brand-glow); }
+  .btn-brand:hover { background: var(--brand-light); transform: translateY(-2px); box-shadow: 0 0 30px var(--brand-glow); }
+  .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-primary); }
+  .btn-outline:hover { background: var(--bg-surface-hover); border-color: #444; }
+
+  /* BACKGROUND NOISE & GLOW */
+  .noise { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; opacity: 0.03; z-index: 9999; background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)"/%3E%3C/svg%3E'); }
+  .glow-orb { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, var(--brand-glow) 0%, transparent 60%); top: -200px; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: -1; filter: blur(60px); opacity: 0.6; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; width: 100%; padding: 20px 0; z-index: 100; transition: all 0.3s; border-bottom: 1px solid transparent; }
+  nav.scrolled { background: rgba(5,5,5,0.8); backdrop-filter: blur(12px); border-bottom-color: var(--border-color); padding: 16px 0; }
+  .logo { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: #fff; text-decoration: none; letter-spacing: -0.03em; }
+
+  /* HERO */
+  #hero { padding: 180px 0 100px; position: relative; text-align: center; overflow: hidden; }
+  .hero-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: 0.3; pointer-events: none; filter: grayscale(50%); }
+  .hero-badge { display: inline-block; padding: 6px 16px; border: 1px solid var(--border-color); border-radius: 100px; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 24px; background: var(--bg-surface); font-family: var(--font-heading); letter-spacing: 0.05em; text-transform: uppercase; }
+  .hero-badge span { color: var(--brand-light); margin-right: 8px; }
+  h1 { font-family: var(--font-heading); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 700; line-height: 1.1; margin-bottom: 24px; letter-spacing: -0.04em; }
+  .hero-p { font-size: 1.1rem; color: var(--text-secondary); max-width: 680px; margin: 0 auto 40px; line-height: 1.7; }
+
+  /* MARQUEE */
+  .marquee-wrap { border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 32px 0; overflow: hidden; background: var(--bg-surface); }
+  .marquee { display: flex; gap: 80px; animation: scroll 30s linear infinite; opacity: 0.4; filter: grayscale(100%); }
+  .marquee span { font-family: var(--font-heading); font-weight: 700; font-size: 1.2rem; white-space: nowrap; }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SECTION HEADERS */
+  section { padding: 120px 0; border-bottom: 1px solid var(--border-color); position: relative; }
+  .section-tag { font-family: var(--font-heading); font-size: 0.85rem; color: var(--brand-light); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; display: block; }
+  .section-title { font-family: var(--font-heading); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 600; line-height: 1.2; margin-bottom: 24px; letter-spacing: -0.03em; max-width: 800px; }
+  .section-sub { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin-bottom: 64px; }
+
+  /* BENTO GRID (The Bottleneck) */
+  .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .bento-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 16px; padding: 40px; transition: border-color 0.3s; position: relative; overflow: hidden; }
+  .bento-card:hover { border-color: var(--brand-primary); }
+  .bento-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--brand-primary); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
+  .bento-card:hover::before { transform: scaleX(1); }
+  .bento-icon { font-size: 2rem; margin-bottom: 24px; color: var(--brand-light); }
+  .bento-title { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600; margin-bottom: 12px; }
+  .bento-p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
+
+  /* METHODOLOGY (Process) */
+  .process-list { display: flex; flex-direction: column; gap: 40px; border-left: 1px solid var(--border-color); margin-left: 20px; padding-left: 40px; }
+  .process-item { position: relative; }
+  .process-item::before { content: ''; position: absolute; left: -45px; top: 0; width: 10px; height: 10px; background: var(--bg-base); border: 2px solid var(--brand-light); border-radius: 50%; box-shadow: 0 0 10px var(--brand-glow); }
+  .process-step { font-family: var(--font-heading); font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; }
+  .process-title { font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 12px; }
+  .process-p { color: var(--text-secondary); font-size: 1rem; max-width: 500px; }
+
+  /* SOLUTIONS (Complex Bento) */
+  .solutions-grid { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: auto auto; gap: 20px; }
+  .sol-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 16px; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+  .sol-large { grid-row: span 2; background: linear-gradient(180deg, var(--bg-surface) 0%, #081a29 100%); border-color: rgba(20,120,190,0.3); }
+  .sol-card h3 { font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 16px; }
+  .sol-card p { color: var(--text-secondary); }
+
+  /* FAQ */
+  .faq-item { border-bottom: 1px solid var(--border-color); }
+  .faq-q { width: 100%; text-align: left; background: none; border: none; color: #fff; padding: 32px 0; font-family: var(--font-heading); font-size: 1.2rem; font-weight: 500; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: color 0.2s; }
+  .faq-q:hover { color: var(--brand-light); }
+  .faq-icon { font-size: 1.5rem; font-weight: 300; transition: transform 0.3s; }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+  .faq-a p { color: var(--text-secondary); padding-bottom: 32px; font-size: 1rem; }
+  .faq-item.active .faq-icon { transform: rotate(45deg); }
+
+  /* CTA FINAL */
+  #cta { text-align: center; border: none; padding: 160px 0; }
+  #cta .glow-orb { top: 50%; transform: translate(-50%, -50%); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .bento-grid { grid-template-columns: 1fr; }
+    .solutions-grid { grid-template-columns: 1fr; }
+    .sol-large { grid-row: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+
+<nav id="navbar">
+  <div class="container flex items-center justify-between">
+    <a href="#" class="logo">Alpe.</a>
+    <a href="#cta" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.85rem;">Agendar Diagnóstico</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <video autoplay loop muted playsinline class="hero-video-bg">
+    <source src="https://www.pexels.com/pt-br/download/video/35247788/" type="video/mp4">
+  </video>
+  <div class="glow-orb"></div>
+  <div class="container">
+    <div class="hero-badge"><span>●</span> Operação & Growth</div>
+    <h1>Descubra o gargalo que trava<br>o crescimento da sua marca</h1>
+    <p class="hero-p">Diagnóstico operacional + implementação estratégica. Mapeamos a sua operação, encontramos o que mais drena o seu dinheiro e implementamos campanhas sob medida para escalar seu faturamento.</p>
+    <div class="flex items-center gap-4" style="justify-content: center;">
+      <a href="#cta" class="btn btn-brand">Agendar Diagnóstico Gratuito</a>
+      <a href="#metodo" class="btn btn-outline">Entender a Metodologia</a>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>ECOMMERCE</span><span>SAÚDE</span><span>INFOPRODUTOS</span><span>CONSTRUTORAS</span><span>CLÍNICAS</span><span>B2B</span>
+    <span>ECOMMERCE</span><span>SAÚDE</span><span>INFOPRODUTOS</span><span>CONSTRUTORAS</span><span>CLÍNICAS</span><span>B2B</span>
+  </div>
+</div>
+
+<section id="problema">
+  <div class="container">
+    <span class="section-tag">O Gargalo</span>
+    <h2 class="section-title">Por que você ainda não escala<br>como deveria?</h2>
+    
+    <div class="bento-grid">
+      <div class="bento-card">
+        <div class="bento-icon">🎯</div>
+        <h3 class="bento-title">Marketing Sem Precisão</h3>
+        <p class="bento-p">Sua verba é pulverizada em canais errados. Sem rastreamento e sem inteligência de dados, cada clique custa caro e não gera ROI sustentável.</p>
+      </div>
+      <div class="bento-card">
+        <div class="bento-icon">👻</div>
+        <h3 class="bento-title">Presença Invisível</h3>
+        <p class="bento-p">Seu concorrente domina as buscas orgânicas e dita as regras do seu mercado enquanto a sua marca briga por migalhas nas redes sociais.</p>
+      </div>
+      <div class="bento-card">
+        <div class="bento-icon">⏳</div>
+        <h3 class="bento-title">Falta de Conversão Real</h3>
+        <p class="bento-p">Páginas de vendas lentas, sem copywriting persuasivo e design amador. O cliente clica, entra, mas vai embora antes de comprar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="metodo">
+  <div class="container grid grid-cols-2 gap-8" style="align-items: center;">
+    <div>
+      <span class="section-tag">A Metodologia</span>
+      <h2 class="section-title" style="margin-bottom: 24px;">Diagnóstico, mapeamento<br>e implementação.</h2>
+      <p class="section-sub" style="margin-bottom: 0;">Não somos apenas uma agência que aperta botões. Entramos na sua operação com mentalidade de sócio.</p>
+    </div>
+    
+    <div class="process-list">
+      <div class="process-item">
+        <div class="process-step">FASE 01</div>
+        <h3 class="process-title">Diagnóstico Operacional</h3>
+        <p class="process-p">Mapeamos todo o fluxo comercial da sua empresa para entender exatamente por onde o dinheiro está vazando.</p>
+      </div>
+      <div class="process-item">
+        <div class="process-step">FASE 02</div>
+        <h3 class="process-title">Identificação do Gargalo</h3>
+        <p class="process-p">Desenhamos um plano de mídia exclusivo baseado em dados reais do seu faturamento e do mercado atual.</p>
+      </div>
+      <div class="process-item">
+        <div class="process-step">FASE 03</div>
+        <h3 class="process-title">Implementação Sob Medida</h3>
+        <p class="process-p">Construímos os motores de tráfego, as landing pages e os processos de SEO necessários para estancar a perda de receita e iniciar a escala.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="solucoes">
+  <div class="container">
+    <span class="section-tag">A Solução</span>
+    <h2 class="section-title">Nossas engrenagens de<br>alta performance</h2>
+    
+    <div class="solutions-grid">
+      <div class="sol-card sol-large">
+        <span style="font-size: 2.5rem; margin-bottom: 20px; display:block;">📈</span>
+        <h3>Performance & Ads Analytics</h3>
+        <p style="font-size: 1.1rem; max-width: 400px; margin-bottom: 24px;">Meta Ads, Google Ads e TikTok Ads geridos com foco obsessivo em CPA baixo e LTV alto. Rastreamento server-side e dashboards ao vivo.</p>
+        <a href="#cta" class="text-brand" style="text-decoration:none; font-weight:500;">Saber mais →</a>
+      </div>
+      <div class="sol-card">
+        <span style="font-size: 1.5rem; margin-bottom: 16px; display:block;">⚡</span>
+        <h3>LPs de Conversão Extremada</h3>
+        <p>Design voltado 100% para conversão. Testes A/B e UX fluida para espremer o máximo de vendas de cada visita.</p>
+      </div>
+      <div class="sol-card">
+        <span style="font-size: 1.5rem; margin-bottom: 16px; display:block;">🔍</span>
+        <h3>Estratégia SEO</h3>
+        <p>Apareça para quem já está com o cartão na mão buscando o seu produto no Google.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container" style="max-width: 800px;">
+    <span class="section-tag" style="text-align: center;">Tudo às Claras</span>
+    <h2 class="section-title" style="text-align: center; margin: 0 auto 64px;">Perguntas Frequentes</h2>
+    
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">O que vocês fazem exatamente? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Entramos na sua empresa, mapeamos seu funil comercial, identificamos qual gargalo (falta de tráfego, LP ruim ou SEO fraco) está te custando mais dinheiro, e implementamos estratégias precisas para resolver.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Quanto tempo leva para ver resultado? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>A fase de diagnóstico e setup de rastreamento leva de 7 a 10 dias úteis. Após as campanhas irem ao ar, otimizamos semanalmente. Os primeiros saltos de ROI são visíveis geralmente nos primeiros 30 dias.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Qual a diferença da Alpe para agências tradicionais? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>A maioria das agências é "tarefeira", entregam posts bonitos e métricas de vaidade. Nós fazemos um diagnóstico completo. É a diferença entre tomar um remédio aleatório e ir ao médico especialista primeiro.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Funciona para o meu tipo de empresa? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Se o seu produto ou serviço tem validação comercial, sim. Nós operamos com e-commerces, clínicas, escritórios e lançamentos que já têm tração e precisam de escala agressiva.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Qual o investimento? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Depende da complexidade e dos canais necessários para a sua operação. O diagnóstico inicial é 100% gratuito e já te entregará imenso valor e clareza do problema. A partir dele, montamos uma proposta sob medida.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cta">
+  <div class="glow-orb"></div>
+  <div class="container">
+    <h2 class="section-title" style="margin: 0 auto 24px; text-align: center;">O gargalo não vai sumir sozinho.</h2>
+    <p class="hero-p" style="margin: 0 auto 40px; text-align: center;">Pare de perder dinheiro todos os dias com amadorismo. Agende um diagnóstico de 15 minutos com nosso estrategista e encontre o caminho da escala.</p>
+    <a href="https://wa.me/5561999999999" class="btn btn-brand" style="padding: 16px 36px; font-size: 1.1rem;">Agendar Diagnóstico Gratuito</a>
+  </div>
+</section>
+
+<footer style="text-align: center; padding: 40px 0; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.9rem;">
+  <p>© 2026 Alpe Marketing. Estratégia e Performance.</p>
+</footer>
+
+<script>
+  // Navbar scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // FAQ Accordion
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const answer = btn.nextElementSibling;
+      const isActive = item.classList.contains('active');
+      
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('active');
+        i.querySelector('.faq-a').style.maxHeight = null;
+      });
+      
+      if (!isActive) {
+        item.classList.add('active');
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    });
+  });
+</script>
+</body>
+</html>
