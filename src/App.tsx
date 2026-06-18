@@ -188,7 +188,7 @@ function App() {
               className="w-full h-full object-cover"
               onEnded={() => setShowIntro(false)}
             >
-              <source src="/intro.mp4" type="video/mp4" />
+              <source src="/alpe-start.mp4" type="video/mp4" />
             </video>
             <button 
               onClick={() => setShowIntro(false)}
@@ -202,7 +202,7 @@ function App() {
       <div className={`dark min-h-screen text-white font-sans selection:bg-[#1478BE] ${showIntro ? 'h-screen overflow-hidden' : ''}`}>
         {/* GLOBAL FIXED BACKGROUNDS */}
         <video autoPlay loop muted playsInline poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" className="fixed top-0 left-0 w-full h-full object-cover -z-20 opacity-80 pointer-events-none grayscale-0">
-          <source src="/bg2.mp4" type="video/mp4" />
+          <source src="/alpe-fundo.mp4" type="video/mp4" />
         </video>
       <div className="fixed top-0 left-0 w-full h-full bg-black/10 -z-10 pointer-events-none"></div>
       <div className="noise"></div>
