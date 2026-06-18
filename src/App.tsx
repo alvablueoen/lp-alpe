@@ -6,6 +6,10 @@ import { ProcessStackCards } from './components/ui/stack-card';
 import { Storytelling3DGrid } from './components/ui/3d-story-grid';
 import { TextEffect } from './components/ui/text-effect';
 
+// Import videos
+import introVideoSrc from "./assets/alpe-start.mp4";
+import bgVideoSrc from "./assets/alpe-fundo.mp4";
+
 const Typewriter = ({ words }: { words: string[] }) => {
   const [text, setText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -205,7 +209,7 @@ function App() {
                     style="background-color: black;"
                     class="w-full h-full object-cover"
                   >
-                    <source src="/alpe-start.mp4" type="video/mp4" />
+                    <source src="${introVideoSrc}" type="video/mp4" />
                   </video>
                 `
               }}
@@ -219,7 +223,7 @@ function App() {
           </motion.div>
         )}
       </AnimatePresence>
-      <div className={`dark min-h-screen text-white font-sans selection:bg-[#1478BE] ${showIntro ? 'h-screen overflow-hidden' : ''}`}>
+      <div className={`dark min-h-screen text-white font-sans selection:bg-[#1478BE] bg-gradient-to-br from-[#050505] to-[#111111] ${showIntro ? 'h-screen overflow-hidden' : ''}`}>
         {/* GLOBAL FIXED BACKGROUNDS */}
         <div 
           className="fixed top-0 left-0 w-full h-full -z-20 opacity-80 pointer-events-none grayscale-0"
@@ -232,7 +236,7 @@ function App() {
                 playsinline 
                 class="w-full h-full object-cover"
               >
-                <source src="/alpe-fundo.mp4" type="video/mp4" />
+                <source src="${bgVideoSrc}" type="video/mp4" />
               </video>
             `
           }}
