@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { ContainerScroll } from './components/ui/container-scroll-animation';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { AlpeChat } from './components/ui/alpe-chat';

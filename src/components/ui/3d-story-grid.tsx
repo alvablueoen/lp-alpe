@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { motion, useTransform, useMotionValue, useSpring } from "framer-motion";
 
 export const Storytelling3DGrid = ({ items }: { items: { icon: string; title: string; desc: string; }[] }) => {
   const containerRef = useRef<HTMLDivElement>(null);

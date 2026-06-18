@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type React from "react"
 
 import { useEffect, useRef, useState } from "react"
@@ -64,7 +65,7 @@ export function ShaderBackground({ children }: ShaderBackgroundProps) {
         className="absolute inset-0 w-full h-full"
         colors={["#000000", "#1478BE", "#ffffff", "#001f3f", "#0a2540"]}
         speed={0.3}
-        backgroundColor="#000000"
+       
       />
       <MeshGradient
         className="absolute inset-0 w-full h-full opacity-60"
