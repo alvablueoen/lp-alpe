@@ -169,6 +169,20 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (showIntro) {
+      const introVid = document.getElementById('intro-video') as HTMLVideoElement;
+      if (introVid) {
+        introVid.play().catch(() => {});
+        introVid.onended = () => setShowIntro(false);
+      } else {
+        // Fallback in case video fails to render
+        const t = setTimeout(() => setShowIntro(false), 6000);
+        return () => clearTimeout(t);
+      }
+    }
+  }, [showIntro]);
+
   return (
     <>
       <AnimatePresence>
@@ -179,17 +193,23 @@ function App() {
             transition={{ duration: 0.8 }}
             className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden"
           >
-            <video 
-              autoPlay 
-              muted 
-              playsInline 
-              style={{ backgroundColor: 'black' }}
-              poster="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs="
-              className="w-full h-full object-cover"
-              onEnded={() => setShowIntro(false)}
-            >
-              <source src="/alpe-start.mp4" type="video/mp4" />
-            </video>
+            <div 
+              className="w-full h-full bg-black"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  <video 
+                    id="intro-video"
+                    autoplay 
+                    muted 
+                    playsinline 
+                    style="background-color: black;"
+                    class="w-full h-full object-cover"
+                  >
+                    <source src="/alpe-start.mp4" type="video/mp4" />
+                  </video>
+                `
+              }}
+            />
             <button 
               onClick={() => setShowIntro(false)}
               className="absolute bottom-10 right-10 z-[101] text-white/50 hover:text-white border border-white/20 hover:border-white/50 px-6 py-2 rounded-full backdrop-blur-md transition-all font-black tracking-tight tracking-widest text-sm uppercase cursor-pointer"
@@ -201,9 +221,22 @@ function App() {
       </AnimatePresence>
       <div className={`dark min-h-screen text-white font-sans selection:bg-[#1478BE] ${showIntro ? 'h-screen overflow-hidden' : ''}`}>
         {/* GLOBAL FIXED BACKGROUNDS */}
-        <video autoPlay loop muted playsInline poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" className="fixed top-0 left-0 w-full h-full object-cover -z-20 opacity-80 pointer-events-none grayscale-0">
-          <source src="/alpe-fundo.mp4" type="video/mp4" />
-        </video>
+        <div 
+          className="fixed top-0 left-0 w-full h-full -z-20 opacity-80 pointer-events-none grayscale-0"
+          dangerouslySetInnerHTML={{
+            __html: `
+              <video 
+                autoplay 
+                loop 
+                muted 
+                playsinline 
+                class="w-full h-full object-cover"
+              >
+                <source src="/alpe-fundo.mp4" type="video/mp4" />
+              </video>
+            `
+          }}
+        />
       <div className="fixed top-0 left-0 w-full h-full bg-black/10 -z-10 pointer-events-none"></div>
       <div className="noise"></div>
 
