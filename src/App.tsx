@@ -122,6 +122,38 @@ function App() {
 
   const [isMobile, setIsMobile] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    const formData = new FormData(e.currentTarget);
+    formData.append("Verba de Investimento", verbaOption === 'Outro' ? `R$ ${verbaCustom}` : `R$ ${verbaOption}`);
+    formData.append("Serviços Desejados", servicos.length > 0 ? servicos.join(", ") : "Nenhum selecionado");
+    
+    // Web3Forms config
+    formData.append("access_key", "939540a5-96e3-431c-91c6-1fca24db41c7"); // <--- AQUI VAI A CHAVE
+    formData.append("subject", "Novo Diagnóstico Solicitado - Alpe");
+    formData.append("from_name", "Landing Page Alpe");
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+      
+      if (res.ok) {
+        setIsFormSubmitted(true);
+      } else {
+        alert("Houve um erro ao enviar. Tente novamente.");
+      }
+    } catch (error) {
+      alert("Erro de conexão. Verifique sua internet.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -295,28 +327,27 @@ function App() {
           >
             <AnimatePresence mode="wait">
               {!isFormSubmitted ? (
-                <motion.form 
-                  key="form"
-                  exit={{ opacity: 0, x: -50 }}
-                  className="flex flex-col gap-4" 
-                  onSubmit={(e) => { e.preventDefault(); setIsFormSubmitted(true); }}
-                >
-                  <div>
-                    <label className="text-[11px] text-[#888] uppercase tracking-wider mb-1.5 block">Seu Nome</label>
-                    <input type="text" required placeholder="João Silva" className="w-full bg-[#111] border border-[#333] rounded-xl px-4 py-3 text-[0.9rem] text-white placeholder-[#555] focus:border-[#1478BE] outline-none transition-all focus:scale-[1.02]" />
-                  </div>
-                  <div>
-                    <label className="text-[11px] text-[#888] uppercase tracking-wider mb-1.5 block">WhatsApp</label>
-                    <input type="tel" required placeholder="(11) 99999-9999" className="w-full bg-[#111] border border-[#333] rounded-xl px-4 py-3 text-[0.9rem] text-white placeholder-[#555] focus:border-[#1478BE] outline-none transition-all focus:scale-[1.02]" />
-                  </div>
-                  <div>
-                    <label className="text-[11px] text-[#888] uppercase tracking-wider mb-1.5 block">Instagram / Link do Negócio</label>
-                    <input type="text" required placeholder="@suaempresa" className="w-full bg-[#111] border border-[#333] rounded-xl px-4 py-3 text-[0.9rem] text-white placeholder-[#555] focus:border-[#1478BE] outline-none transition-all focus:scale-[1.02]" />
-                  </div>
-                  <div>
-                    <label className="text-[11px] text-[#888] uppercase tracking-wider mb-1.5 block">Qual a sua principal dificuldade?</label>
-                    <textarea rows={2} required placeholder="Ex: Recebo cliques mas não converto..." className="w-full bg-[#111] border border-[#333] rounded-xl px-4 py-3 text-[0.9rem] text-white placeholder-[#555] focus:border-[#1478BE] outline-none transition-all focus:scale-[1.02] resize-none"></textarea>
-                  </div>
+                  <form 
+                    className="flex flex-col gap-4" 
+                    onSubmit={handleSubmit}
+                  >
+                    <input type="hidden" name="apikey" value="939540a5-96e3-431c-91c6-1fca24db41c7" />
+                    <div>
+                      <label className="text-[11px] text-[#888] uppercase tracking-wider mb-1.5 block">Seu Nome</label>
+                      <input type="text" name="Nome" required placeholder="João Silva" className="w-full bg-[#111] border border-[#333] rounded-xl px-4 py-3 text-[0.9rem] text-white placeholder-[#555] focus:border-[#1478BE] outline-none transition-all focus:scale-[1.02]" />
+                    </div>
+                    <div>
+                      <label className="text-[11px] text-[#888] uppercase tracking-wider mb-1.5 block">WhatsApp</label>
+                      <input type="tel" name="WhatsApp" required placeholder="(11) 99999-9999" className="w-full bg-[#111] border border-[#333] rounded-xl px-4 py-3 text-[0.9rem] text-white placeholder-[#555] focus:border-[#1478BE] outline-none transition-all focus:scale-[1.02]" />
+                    </div>
+                    <div>
+                      <label className="text-[11px] text-[#888] uppercase tracking-wider mb-1.5 block">Instagram / Link do Negócio</label>
+                      <input type="text" name="Instagram" required placeholder="@suaempresa" className="w-full bg-[#111] border border-[#333] rounded-xl px-4 py-3 text-[0.9rem] text-white placeholder-[#555] focus:border-[#1478BE] outline-none transition-all focus:scale-[1.02]" />
+                    </div>
+                    <div>
+                      <label className="text-[11px] text-[#888] uppercase tracking-wider mb-1.5 block">Qual a sua principal dificuldade?</label>
+                      <textarea name="Dificuldade" rows={2} required placeholder="Ex: Recebo cliques mas não converto..." className="w-full bg-[#111] border border-[#333] rounded-xl px-4 py-3 text-[0.9rem] text-white placeholder-[#555] focus:border-[#1478BE] outline-none transition-all focus:scale-[1.02] resize-none"></textarea>
+                    </div>
                   <div>
                     <label className="text-[11px] text-[#888] uppercase tracking-wider mb-2 block">Verba de Investimento <span className="text-[#555] lowercase">(opcional)</span></label>
                     <div className="grid grid-cols-4 gap-2 mb-2">
@@ -364,12 +395,13 @@ function App() {
                   
                   <motion.button 
                     type="submit" 
+                    disabled={isSubmitting}
                     whileTap={{ scale: 0.97 }}
-                    className="mt-4 w-full py-4 rounded-xl font-bold text-[0.95rem] transition-all bg-[#1478BE] text-white shadow-[0_0_30px_rgba(20,120,190,0.4)] hover:bg-[#5bb3f0] cursor-pointer"
+                    className={`mt-4 w-full py-4 rounded-xl font-bold text-[0.95rem] transition-all bg-[#1478BE] text-white shadow-[0_0_30px_rgba(20,120,190,0.4)] hover:bg-[#5bb3f0] ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}`}
                   >
-                    Solicitar Diagnóstico Agora
+                    {isSubmitting ? 'Enviando...' : 'Solicitar Diagnóstico Agora'}
                   </motion.button>
-                </motion.form>
+                </form>
               ) : (
                 <motion.div 
                   key="success"
