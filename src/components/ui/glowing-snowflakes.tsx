@@ -15,18 +15,19 @@ export function GlowingSnowflakes() {
     canvas.width = width;
     canvas.height = height;
 
+    const isMobile = width <= 768;
     const particles: any[] = [];
-    const particleCount = 200;
+    const particleCount = isMobile ? 50 : 200;
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        r: Math.random() * 3 + 1, // radius
+        r: Math.random() * 4 + 2, // radius increased
         d: Math.random() * particleCount, // density
         speedY: Math.random() * 1.5 + 0.5,
         speedX: Math.random() * 1 - 0.5,
-        opacity: Math.random() * 0.6 + 0.2,
+        opacity: Math.random() * 0.8 + 0.4, // increased opacity
       });
     }
 
@@ -103,9 +104,9 @@ export function GlowingSnowflakes() {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         
-        // Efeito de Glow
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = 'rgba(91,179,240,0.8)';
+        // Efeito de Glow Intenso (Reduzido no mobile para não travar)
+        ctx.shadowBlur = isMobile ? 5 : 25;
+        ctx.shadowColor = 'rgba(91,179,240,1)';
         ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
         ctx.fill();
       });
@@ -127,6 +128,7 @@ export function GlowingSnowflakes() {
     <canvas
       ref={canvasRef}
       className="fixed top-0 left-0 w-full h-full pointer-events-none z-[0]"
+      style={{ willChange: 'transform, opacity' }}
     />
   );
 }

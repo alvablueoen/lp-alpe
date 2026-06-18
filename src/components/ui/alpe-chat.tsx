@@ -10,25 +10,25 @@ type Message = {
 const PREDEFINED_QA = [
   {
     question: "Como funciona o serviço?",
-    answer: "Nós fazemos um diagnóstico profundo da sua empresa e então criamos uma máquina de atração de clientes usando tráfego pago e páginas de alta conversão."
+    answer: "Nós analisamos o seu negócio e criamos um sistema simples que atrai clientes interessados e os direciona direto para o seu WhatsApp todos os dias."
   },
   {
     question: "Qual é o orçamento mínimo?",
-    answer: "Não exigimos um mínimo engessado, mas recomendamos uma verba inicial que permita o algoritmo otimizar as campanhas rapidamente nas primeiras semanas."
+    answer: "Não exigimos um valor mínimo obrigatório, mas recomendamos um investimento que permita aos anúncios encontrar os clientes certos já nas primeiras semanas."
   },
   {
     question: "Em quanto tempo vejo resultados?",
-    answer: "Colocamos tudo no ar em até 10 dias. Assim que os anúncios rodam, os primeiros leads qualificados costumam chegar logo nas semanas iniciais."
+    answer: "Colocamos tudo no ar em até 10 dias. Assim que ativamos os anúncios, os primeiros clientes interessados costumam chegar rapidamente."
   },
   {
-    question: "Atendem o meu nicho?",
-    answer: "Com certeza. Nossa engenharia foca em buscar quem já tem interesse no seu serviço (fundo de funil), seja no B2B, serviços, saúde ou e-commerce."
+    question: "Vocês atendem a minha área?",
+    answer: "Com certeza. O nosso foco é encontrar pessoas que já estão prontas para comprar de você agora mesmo, não importa qual seja o seu tipo de negócio ou serviço."
   }
 ];
 
 export function AlpeChat() {
   const [messages, setMessages] = useState<Message[]>([
-    { id: 1, sender: 'alpe', text: 'Olá! Sou a IA da Alpe. Escolha uma das opções abaixo para saber mais sobre como podemos escalar suas vendas.' }
+    { id: 1, sender: 'alpe', text: 'Olá! Sou a Atendente Virtual da Alpe. Escolha uma das opções abaixo para saber mais sobre como podemos aumentar suas vendas.' }
   ]);
   const [availableOptions, setAvailableOptions] = useState(PREDEFINED_QA);
   const [isTyping, setIsTyping] = useState(false);
@@ -97,7 +97,7 @@ export function AlpeChat() {
             A.
           </div>
           <div>
-            <h3 className="font-['Space_Grotesk'] text-[1.1rem] font-bold text-white leading-tight">Atendente Grupo Alpe</h3>
+            <h3 className="font-black tracking-tight text-[1.1rem] font-bold text-white leading-tight">Atendente Grupo Alpe</h3>
             <div className="flex items-center text-[0.7rem] text-[#5bb3f0] font-medium mt-0.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#5bb3f0] mr-1.5 animate-pulse"></span>
               Online agora
@@ -167,7 +167,7 @@ export function AlpeChat() {
               className="text-center"
             >
               <p className="text-[#aaa] text-xs mb-3 leading-relaxed">
-                Nossa IA identificou que você tem potencial de escala. Vamos conversar pessoalmente?
+                Nossa Atendente Virtual identificou que você tem potencial para aumentar suas vendas. Vamos conversar pessoalmente?
               </p>
               <a
                 href="#form-diagnostico"

@@ -82,7 +82,7 @@ const StoryCard = ({ item, index }: { item: any, index: number }) => {
           </div>
           
           {/* Content */}
-          <h3 style={{ transform: "translateZ(40px)" }} className="font-['Space_Grotesk'] text-2xl font-bold mb-4 text-white group-hover:text-[#5bb3f0] transition-colors duration-300">
+          <h3 style={{ transform: "translateZ(40px)" }} className="font-black tracking-tight text-2xl font-bold mb-4 text-white group-hover:text-[#5bb3f0] transition-colors duration-300">
             {item.title}
           </h3>
           

@@ -27,16 +27,19 @@ export const ContainerScroll = ({
   }, []);
 
   const scaleDimensions = () => {
-    return isMobile ? [0.7, 0.9] : [1.05, 1];
+    return isMobile ? [1.1, 1.3] : [1.05, 1];
   };
 
-  const rotate = useTransform(scrollYProgress, [0, 1], [20, 0]);
+  const rotateDesktop = useTransform(scrollYProgress, [0, 1], [20, 0]);
+  const rotateMobile = useTransform(scrollYProgress, [0, 1], [2, 0]);
+  const rotate = isMobile ? rotateMobile : rotateDesktop;
+  
   const scale = useTransform(scrollYProgress, [0, 1], scaleDimensions());
   const translate = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
   return (
     <div
-      className="h-[40rem] sm:h-[50rem] md:h-[80rem] flex items-center justify-center relative p-2 md:p-20"
+      className="h-[45rem] sm:h-[50rem] md:h-[80rem] flex items-center justify-center relative p-2 md:p-20"
       ref={containerRef}
     >
       <div
@@ -82,13 +85,28 @@ export const Card = ({
       style={{
         rotateX: rotate,
         scale,
-        boxShadow:
-          "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003",
       }}
-      className="max-w-5xl -mt-6 md:-mt-12 mx-auto h-[20rem] sm:h-[24rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-6 bg-[#222222] rounded-[20px] md:rounded-[30px] shadow-2xl"
+      className="max-w-6xl mt-0 md:-mt-12 mx-auto w-[105%] md:w-full relative drop-shadow-[0_40px_100px_rgba(20,120,190,0.3)]"
     >
-      <div className=" h-full w-full  overflow-hidden rounded-xl bg-gray-100 dark:bg-zinc-900 md:rounded-2xl md:p-4 ">
-        {children}
+      <div className="relative w-full aspect-[3/2] overflow-hidden rounded-[20px] md:rounded-[30px]">
+        <img src="/mockup-pedra.jpg" alt="Macbook Mockup na Pedra" className="absolute inset-0 w-full h-full object-cover" />
+
+        <div 
+          className="absolute z-10 flex items-center justify-center overflow-hidden mix-blend-multiply"
+          style={{
+            top: "24.7%",
+            left: "34.2%",
+            width: "40.8%",
+            height: "44.3%",
+            transformOrigin: "center",
+            transform: "perspective(1000px) rotateY(8deg) rotateX(14deg) rotateZ(-11deg) skewY(1deg)",
+            borderRadius: "5px"
+          }}
+        >
+          <div className="w-[105%] h-[105%] bg-white">
+            {children}
+          </div>
+        </div>
       </div>
     </motion.div>
   );

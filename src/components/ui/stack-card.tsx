@@ -30,23 +30,28 @@ function Card({ data, i }: CardProps) {
 
     return (
         <motion.div
-            className={`card-container-${i} w-full max-w-[500px] mb-[-120px] md:mb-[-150px] relative pt-5 flex justify-center overflow-visible`}
+            className={`w-full max-w-[600px] mb-8 md:mb-12 relative flex justify-center`}
             initial="offscreen"
             whileInView="onscreen"
-            viewport={{ amount: 0.6 }}
+            viewport={{ once: true, amount: 0.3 }}
+            whileHover={{ scale: 1.02, y: -5 }}
+            transition={{ duration: 0.3 }}
         >
-            <div className="absolute inset-0 pointer-events-none opacity-20" style={{ ...splash, background }} />
-            
             <motion.div 
                 variants={cardVariants} 
-                className="w-full h-[350px] md:h-[400px] flex flex-col justify-center items-start rounded-3xl p-8 md:p-12 relative overflow-hidden bg-black/60 backdrop-blur-xl border border-[#333] shadow-[0_0_30px_rgba(0,0,0,0.8)]"
-                style={{ transformOrigin: "10% 60%" }}
+                className="w-full min-h-[250px] md:min-h-[300px] flex flex-col justify-center items-start rounded-3xl p-8 md:p-12 relative overflow-hidden bg-white/5 backdrop-blur-lg md:backdrop-blur-3xl border border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.4),inset_0_0_20px_rgba(255,255,255,0.1)] hover:border-white/40 transition-all duration-300 group"
             >
-                {/* Background glow based on hues */}
+                {/* Frost / Ice gradient background */}
                 <div 
-                    className="absolute inset-0 opacity-10 pointer-events-none" 
+                    className="absolute inset-0 opacity-10 md:opacity-20 pointer-events-none mix-blend-screen transition-opacity duration-500 group-hover:opacity-30" 
                     style={{ background }}
                 />
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none" />
+                
+                {/* Subtle Snow Decorations */}
+                <div className="absolute -top-4 -right-4 text-white/20 text-6xl md:text-8xl blur-[2px] rotate-12 drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] pointer-events-none transition-transform duration-700 group-hover:rotate-45 group-hover:scale-110">❄️</div>
+                <div className="absolute bottom-10 left-4 text-white/10 text-4xl blur-[1px] -rotate-45 pointer-events-none transition-transform duration-700 group-hover:-rotate-12 group-hover:scale-125">❄️</div>
+                <div className="absolute top-1/2 left-1/2 text-white/5 text-9xl blur-[8px] pointer-events-none">❄️</div>
                 
                 {/* Top decorative line */}
                 <div 
@@ -55,13 +60,13 @@ function Card({ data, i }: CardProps) {
                 />
 
                 <div className="relative z-10 w-full">
-                    <span className="font-['Space_Grotesk'] text-xs md:text-sm font-bold uppercase tracking-widest block mb-4" style={{ color: hue(data.hueB) }}>
+                    <span className="font-black tracking-tight text-sm md:text-base font-bold uppercase tracking-[0.2em] block mb-4" style={{ color: hue(data.hueB) }}>
                         Passo {data.step}
                     </span>
-                    <h3 className="font-['Space_Grotesk'] text-2xl md:text-4xl font-bold text-white mb-4 leading-tight">
+                    <h3 className="font-black tracking-tight text-2xl md:text-4xl font-bold text-white mb-4 leading-tight drop-shadow-md">
                         {data.title}
                     </h3>
-                    <p className="text-[#cccccc] text-base md:text-lg leading-relaxed">
+                    <p className="text-[#e2e8f0] text-base md:text-lg leading-relaxed font-light drop-shadow-sm">
                         {data.description}
                     </p>
                 </div>
@@ -72,18 +77,19 @@ function Card({ data, i }: CardProps) {
 
 const cardVariants: Variants = {
     offscreen: {
-        y: 300,
+        y: 100,
         opacity: 0,
-        rotate: 0,
+        scale: 0.95
     },
     onscreen: {
-        y: 50,
+        y: 0,
         opacity: 1,
-        rotate: -2, // Slight rotation for the stack effect, reduced from -10 to be more readable
+        scale: 1,
         transition: {
             type: "spring",
-            bounce: 0.3,
-            duration: 0.8,
+            stiffness: 100,
+            damping: 20,
+            duration: 0.6,
         },
     },
 }
@@ -91,13 +97,9 @@ const cardVariants: Variants = {
 const hue = (h: number) => `hsl(${h}, 100%, 50%)`
 
 const container: React.CSSProperties = {
-    maxWidth: 600,
-    paddingBottom: 200,
+    maxWidth: 800,
+    paddingBottom: 100,
     width: "100%",
-}
-
-const splash: React.CSSProperties = {
-    clipPath: `path("M 0 303.5 C 0 292.454 8.995 285.101 20 283.5 L 460 219.5 C 470.085 218.033 480 228.454 480 239.5 L 500 430 C 500 441.046 491.046 450 480 450 L 20 450 C 8.954 450 0 441.046 0 430 Z")`,
 }
 
 const processData: ProcessStep[] = [
@@ -105,28 +107,28 @@ const processData: ProcessStep[] = [
         step: "01",
         title: "A gente acha o furo",
         description: "Olhamos para o seu negócio e mostramos exatamente por onde você está perdendo vendas e clientes hoje. Sem enrolação.",
-        hueA: 340,
-        hueB: 10,
+        hueA: 195, // Icy Cyan
+        hueB: 210, // Deep Alpe Blue
     },
     {
         step: "02",
         title: "A gente traz o cliente",
         description: "Criamos anúncios na internet focados 100% em atrair quem já tem o cartão na mão e quer comprar. Não ligamos para curtidas.",
-        hueA: 205,
-        hueB: 245,
+        hueA: 200,
+        hueB: 220,
     },
     {
         step: "03",
         title: "A gente cria o funil",
         description: "Deixamos tudo automático. O cliente clica no anúncio, entende o que você vende e já cai no seu WhatsApp pedindo orçamento.",
-        hueA: 260,
-        hueB: 290,
+        hueA: 210,
+        hueB: 230,
     },
     {
         step: "04",
         title: "A gente pisa no acelerador",
-        description: "Quando a máquina começa a dar lucro, a gente aumenta o investimento nos anúncios para multiplicar o seu faturamento rápido.",
-        hueA: 100,
-        hueB: 140,
+        description: "Quando as vendas começam a acontecer todos os dias com lucro, nós aumentamos o investimento de forma segura para multiplicar o seu faturamento.",
+        hueA: 190,
+        hueB: 215,
     },
 ]
