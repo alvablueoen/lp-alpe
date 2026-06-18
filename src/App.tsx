@@ -173,19 +173,22 @@ function App() {
     };
   }, []);
 
+  const introVidRef = useRef<HTMLVideoElement>(null);
+  const bgVidRef = useRef<HTMLVideoElement>(null);
+
   useEffect(() => {
-    if (showIntro) {
-      const introVid = document.getElementById('intro-video') as HTMLVideoElement;
-      if (introVid) {
-        introVid.play().catch(() => {});
-        introVid.onended = () => setShowIntro(false);
-      } else {
-        // Fallback in case video fails to render
-        const t = setTimeout(() => setShowIntro(false), 6000);
-        return () => clearTimeout(t);
-      }
+    if (showIntro && introVidRef.current) {
+      introVidRef.current.play().catch(console.error);
+      const t = setTimeout(() => setShowIntro(false), 6000);
+      return () => clearTimeout(t);
     }
   }, [showIntro]);
+
+  useEffect(() => {
+    if (bgVidRef.current) {
+      bgVidRef.current.play().catch(console.error);
+    }
+  }, []);
 
   return (
     <>
@@ -197,22 +200,14 @@ function App() {
             transition={{ duration: 0.8 }}
             className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden"
           >
-            <div 
-              className="w-full h-full bg-black"
-              dangerouslySetInnerHTML={{
-                __html: `
-                  <video 
-                    id="intro-video"
-                    autoplay 
-                    muted 
-                    playsinline 
-                    style="background-color: black;"
-                    class="w-full h-full object-cover"
-                  >
-                    <source src="${introVideoSrc}" type="video/mp4" />
-                  </video>
-                `
-              }}
+            <video 
+              ref={introVidRef}
+              src={introVideoSrc}
+              autoPlay 
+              muted 
+              playsInline 
+              className="w-full h-full object-cover bg-black"
+              onEnded={() => setShowIntro(false)}
             />
             <button 
               onClick={() => setShowIntro(false)}
@@ -225,21 +220,14 @@ function App() {
       </AnimatePresence>
       <div className={`dark min-h-screen text-white font-sans selection:bg-[#1478BE] bg-gradient-to-br from-[#050505] to-[#111111] ${showIntro ? 'h-screen overflow-hidden' : ''}`}>
         {/* GLOBAL FIXED BACKGROUNDS */}
-        <div 
-          className="fixed top-0 left-0 w-full h-full -z-20 opacity-80 pointer-events-none grayscale-0"
-          dangerouslySetInnerHTML={{
-            __html: `
-              <video 
-                autoplay 
-                loop 
-                muted 
-                playsinline 
-                class="w-full h-full object-cover"
-              >
-                <source src="${bgVideoSrc}" type="video/mp4" />
-              </video>
-            `
-          }}
+        <video 
+          ref={bgVidRef}
+          src={bgVideoSrc}
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          className="fixed top-0 left-0 w-full h-full -z-20 opacity-80 pointer-events-none grayscale-0 object-cover"
         />
       <div className="fixed top-0 left-0 w-full h-full bg-black/10 -z-10 pointer-events-none"></div>
       <div className="noise"></div>
