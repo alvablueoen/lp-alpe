@@ -218,8 +218,9 @@ function App() {
           </motion.div>
         )}
       </AnimatePresence>
-      <div className={`dark min-h-screen text-white font-sans selection:bg-[#1478BE] bg-gradient-to-br from-[#050505] to-[#111111] ${showIntro ? 'h-screen overflow-hidden' : ''}`}>
+      <div className={`dark min-h-screen text-white font-sans selection:bg-[#1478BE] ${showIntro ? 'h-screen overflow-hidden' : ''}`}>
         {/* GLOBAL FIXED BACKGROUNDS */}
+        <div className="fixed top-0 left-0 w-full h-full -z-30 bg-gradient-to-br from-[#050505] to-[#111111]"></div>
         <video 
           ref={bgVidRef}
           src={bgVideoSrc}
