@@ -98,8 +98,8 @@ export function AlpeChat() {
             A.
           </div>
           <div>
-            <h3 className="font-black tracking-tight text-[1.1rem] font-bold text-white leading-tight">Atendente Grupo Alpe</h3>
-            <div className="flex items-center text-[0.7rem] text-[#5bb3f0] font-medium mt-0.5">
+            <h3 className="font-black tracking-tight text-xl md:text-2xl font-bold text-white leading-tight">Atendente Grupo Alpe</h3>
+            <div className="flex items-center text-sm md:text-base text-[#5bb3f0] font-medium mt-0.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#5bb3f0] mr-1.5 animate-pulse"></span>
               Online agora
             </div>
@@ -117,7 +117,7 @@ export function AlpeChat() {
               className={`flex ${msg.sender === 'client' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-[0.9rem] leading-relaxed shadow-sm
+                className={`max-w-[85%] rounded-2xl px-5 py-3 text-base md:text-lg leading-relaxed shadow-sm
                   ${msg.sender === 'client'
                     ? 'bg-[#1478BE] text-white rounded-tr-sm'
                     : 'bg-[#222] text-[#eee] border border-[#333] rounded-tl-sm'
@@ -154,7 +154,7 @@ export function AlpeChat() {
                     key={globalIndex}
                     onClick={() => handleSendOption(globalIndex)}
                     disabled={isTyping}
-                    className="bg-[#1A1A1A] hover:bg-[#1478BE] border border-[#444] hover:border-[#1478BE] text-[#ddd] text-[0.7rem] sm:text-[0.75rem] font-medium rounded-full px-3 py-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-[#1A1A1A] hover:bg-[#1478BE] border border-[#444] hover:border-[#1478BE] text-[#ddd] text-sm sm:text-base font-medium rounded-full px-4 py-2.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {opt.question}
                   </button>
@@ -167,12 +167,12 @@ export function AlpeChat() {
               animate={{ opacity: 1, y: 0 }}
               className="text-center"
             >
-              <p className="text-[#aaa] text-xs mb-3 leading-relaxed">
+              <p className="text-[#aaa] text-sm md:text-base mb-3 leading-relaxed font-medium">
                 Nossa Atendente Virtual identificou que você tem potencial para aumentar suas vendas. Vamos conversar pessoalmente?
               </p>
               <a
                 href="#form-diagnostico"
-                className="block w-full bg-gradient-to-r from-[#1478BE] to-[#5bb3f0] text-white font-medium py-3 rounded-xl text-sm shadow-[0_0_15px_rgba(20,120,190,0.4)] hover:shadow-[0_0_25px_rgba(20,120,190,0.6)] transition-all"
+                className="block w-full bg-gradient-to-r from-[#1478BE] to-[#5bb3f0] text-white font-bold py-4 rounded-xl text-base md:text-lg shadow-[0_0_15px_rgba(20,120,190,0.4)] hover:shadow-[0_0_25px_rgba(20,120,190,0.6)] transition-all"
               >
                 Agendar Diagnóstico Gratuito
               </a>

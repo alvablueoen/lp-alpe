@@ -86,14 +86,14 @@ const StoryCard = ({ item, index }: { item: any, index: number }) => {
             {item.title}
           </h3>
           
-          <p style={{ transform: "translateZ(20px)" }} className="text-[#aaaaaa] text-base leading-relaxed">
+          <p style={{ transform: "translateZ(20px)" }} className="text-[#aaaaaa] text-lg md:text-xl font-medium leading-relaxed">
             {item.desc}
           </p>
 
           {/* Decorative Elements */}
           <div style={{ transform: "translateZ(80px)" }} className="absolute -bottom-6 -right-6 w-32 h-32 bg-[#1478BE]/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
           
-          <div style={{ transform: "translateZ(30px)" }} className="mt-8 flex items-center text-sm font-medium text-[#1478BE] opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+          <div style={{ transform: "translateZ(30px)" }} className="mt-8 flex items-center text-base md:text-lg font-bold text-[#1478BE] opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
             Descobrir solução <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
           </div>
         </div>

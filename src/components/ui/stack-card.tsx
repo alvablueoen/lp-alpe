@@ -61,13 +61,13 @@ function Card({ data, i }: CardProps) {
                 />
 
                 <div className="relative z-10 w-full">
-                    <span className="font-black tracking-tight text-sm md:text-base font-bold uppercase tracking-[0.2em] block mb-4" style={{ color: hue(data.hueB) }}>
+                    <span className="font-black tracking-tight text-base md:text-lg font-bold uppercase tracking-[0.2em] block mb-4" style={{ color: hue(data.hueB) }}>
                         Passo {data.step}
                     </span>
                     <h3 className="font-black tracking-tight text-2xl md:text-4xl font-bold text-white mb-4 leading-tight drop-shadow-md">
                         {data.title}
                     </h3>
-                    <p className="text-[#e2e8f0] text-base md:text-lg leading-relaxed font-light drop-shadow-sm">
+                    <p className="text-[#e2e8f0] text-lg md:text-xl leading-relaxed font-medium drop-shadow-sm">
                         {data.description}
                     </p>
                 </div>

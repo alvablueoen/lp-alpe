@@ -68,7 +68,7 @@ function FAQItem({ q, a }: { q: string, a: string }) {
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <p className="text-[#cccccc] pb-8 text-[0.95rem] md:text-base leading-relaxed">{a}</p>
+            <p className="text-[#cccccc] pb-8 text-lg md:text-lg leading-relaxed">{a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -91,7 +91,7 @@ function ExpandableBentoCard({ icon, title, desc, extra, className, index }: any
     >
       <motion.span layout className="text-3xl md:text-4xl mb-4 block">{icon}</motion.span>
       <motion.h3 layout className="font-black tracking-tight text-xl md:text-2xl mb-3 text-white">{title}</motion.h3>
-      <motion.p layout className="text-[#cccccc] text-[0.95rem] md:text-base leading-relaxed">{desc}</motion.p>
+      <motion.p layout className="text-[#cccccc] text-lg md:text-lg leading-relaxed">{desc}</motion.p>
       
       <AnimatePresence>
         {expanded && (
@@ -101,8 +101,8 @@ function ExpandableBentoCard({ icon, title, desc, extra, className, index }: any
             exit={{ opacity: 0, height: 0, marginTop: 0 }}
             className="border-t border-[#333] pt-6"
           >
-            <p className="text-[#888] text-sm md:text-base leading-relaxed mb-4">{extra}</p>
-            <span className="text-[#1478BE] text-sm font-medium">Toque para fechar ↑</span>
+            <p className="text-[#888] text-lg md:text-lg leading-relaxed mb-4">{extra}</p>
+            <span className="text-[#1478BE] text-lg font-medium">Toque para fechar ↑</span>
           </motion.div>
         )}
       </AnimatePresence>
@@ -211,7 +211,7 @@ function App() {
             />
             <button 
               onClick={() => setShowIntro(false)}
-              className="absolute bottom-10 right-10 z-[101] text-white/50 hover:text-white border border-white/20 hover:border-white/50 px-6 py-2 rounded-full backdrop-blur-md transition-all font-black tracking-tight tracking-widest text-sm uppercase cursor-pointer"
+              className="absolute bottom-10 right-10 z-[101] text-white/50 hover:text-white border border-white/20 hover:border-white/50 px-6 py-2 rounded-full backdrop-blur-md transition-all font-black tracking-tight tracking-widest text-lg uppercase cursor-pointer"
             >
               Pular
             </button>
@@ -239,7 +239,7 @@ function App() {
       <nav id="navbar" className={`fixed top-0 left-0 w-full py-3 md:py-5 z-50 transition-all duration-300 border-b border-transparent ${scrolled ? 'bg-black/80 backdrop-blur-md border-[#222222] py-2 md:py-4' : ''}`}>
         <div className="container flex items-center justify-between">
           <a href="#" className="font-black tracking-tighter text-3xl md:text-4xl text-white">Alpe.</a>
-          <a href="#form-diagnostico" className="inline-flex items-center justify-center px-4 py-2 text-xs md:px-5 md:py-2.5 rounded-lg font-medium md:text-sm transition-all bg-white text-black hover:bg-gray-200 hover:-translate-y-0.5 shadow-lg">
+          <a href="#form-diagnostico" className="inline-flex items-center justify-center px-4 py-2 text-xs md:px-5 md:py-2.5 rounded-lg font-medium md:text-lg transition-all bg-white text-black hover:bg-gray-200 hover:-translate-y-0.5 shadow-lg">
             Agendar Diagnóstico
           </a>
         </div>
@@ -337,11 +337,11 @@ function App() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="w-full max-w-2xl text-center mb-8"
           >
-            <span className="font-black tracking-tight text-sm md:text-base text-[#5bb3f0] uppercase tracking-[0.1em] mb-3 block">Próximo Passo</span>
+            <span className="font-black tracking-tight text-lg md:text-lg text-[#5bb3f0] uppercase tracking-[0.1em] mb-3 block">Próximo Passo</span>
             <TextEffect as="h2" preset="blur" per="word" className="font-black tracking-tight text-3xl md:text-5xl font-semibold leading-tight tracking-tight mb-4">
               {"Solicite seu\nDiagnóstico"}
             </TextEffect>
-            <p className="text-[#cccccc] text-[0.95rem] md:text-base leading-relaxed">Preencha o formulário abaixo para agendarmos uma call estratégica e analisarmos a sua operação.</p>
+            <p className="text-[#cccccc] text-lg md:text-lg leading-relaxed">Preencha o formulário abaixo para agendarmos uma call estratégica e analisarmos a sua operação.</p>
           </motion.div>
 
           <motion.div 
@@ -359,23 +359,23 @@ function App() {
                   >
                     <input type="hidden" name="apikey" value="939540a5-96e3-431c-91c6-1fca24db41c7" />
                     <div>
-                      <label className="text-[11px] text-[#888] uppercase tracking-wider mb-1.5 block">Seu Nome</label>
-                      <input type="text" name="Nome" required placeholder="João Silva" className="w-full bg-[#111] border border-[#333] rounded-xl px-4 py-3 text-[0.9rem] text-white placeholder-[#555] focus:border-[#1478BE] outline-none transition-all focus:scale-[1.02]" />
+                      <label className="text-xs text-[#888] uppercase tracking-wider mb-1.5 block">Seu Nome</label>
+                      <input type="text" name="Nome" required placeholder="João Silva" className="w-full bg-[#111] border border-[#333] rounded-xl px-4 py-3 text-base text-white placeholder-[#555] focus:border-[#1478BE] outline-none transition-all focus:scale-[1.02]" />
                     </div>
                     <div>
-                      <label className="text-[11px] text-[#888] uppercase tracking-wider mb-1.5 block">WhatsApp</label>
-                      <input type="tel" name="WhatsApp" required placeholder="(11) 99999-9999" className="w-full bg-[#111] border border-[#333] rounded-xl px-4 py-3 text-[0.9rem] text-white placeholder-[#555] focus:border-[#1478BE] outline-none transition-all focus:scale-[1.02]" />
+                      <label className="text-xs text-[#888] uppercase tracking-wider mb-1.5 block">WhatsApp</label>
+                      <input type="tel" name="WhatsApp" required placeholder="(11) 99999-9999" className="w-full bg-[#111] border border-[#333] rounded-xl px-4 py-3 text-base text-white placeholder-[#555] focus:border-[#1478BE] outline-none transition-all focus:scale-[1.02]" />
                     </div>
                     <div>
-                      <label className="text-[11px] text-[#888] uppercase tracking-wider mb-1.5 block">Instagram / Link do Negócio</label>
-                      <input type="text" name="Instagram" required placeholder="@suaempresa" className="w-full bg-[#111] border border-[#333] rounded-xl px-4 py-3 text-[0.9rem] text-white placeholder-[#555] focus:border-[#1478BE] outline-none transition-all focus:scale-[1.02]" />
+                      <label className="text-xs text-[#888] uppercase tracking-wider mb-1.5 block">Instagram / Link do Negócio</label>
+                      <input type="text" name="Instagram" required placeholder="@suaempresa" className="w-full bg-[#111] border border-[#333] rounded-xl px-4 py-3 text-base text-white placeholder-[#555] focus:border-[#1478BE] outline-none transition-all focus:scale-[1.02]" />
                     </div>
                     <div>
-                      <label className="text-[11px] text-[#888] uppercase tracking-wider mb-1.5 block">Qual a sua principal dificuldade?</label>
-                      <textarea name="Dificuldade" rows={2} required placeholder="Ex: Recebo cliques mas não converto..." className="w-full bg-[#111] border border-[#333] rounded-xl px-4 py-3 text-[0.9rem] text-white placeholder-[#555] focus:border-[#1478BE] outline-none transition-all focus:scale-[1.02] resize-none"></textarea>
+                      <label className="text-xs text-[#888] uppercase tracking-wider mb-1.5 block">Qual a sua principal dificuldade?</label>
+                      <textarea name="Dificuldade" rows={2} required placeholder="Ex: Recebo cliques mas não converto..." className="w-full bg-[#111] border border-[#333] rounded-xl px-4 py-3 text-base text-white placeholder-[#555] focus:border-[#1478BE] outline-none transition-all focus:scale-[1.02] resize-none"></textarea>
                     </div>
                   <div>
-                    <label className="text-[11px] text-[#888] uppercase tracking-wider mb-2 block">Verba de Investimento <span className="text-[#555] lowercase">(opcional)</span></label>
+                    <label className="text-xs text-[#888] uppercase tracking-wider mb-2 block">Verba de Investimento <span className="text-[#555] lowercase">(opcional)</span></label>
                     <div className="grid grid-cols-4 gap-2 mb-2">
                       {['200', '300', '400', 'Outro'].map(opt => (
                         <motion.button 
@@ -383,7 +383,7 @@ function App() {
                           type="button"
                           whileTap={{ scale: 0.95 }}
                           onClick={() => setVerbaOption(opt)}
-                          className={`py-2 px-1 text-[11px] sm:text-[12px] font-medium rounded-xl border transition-all ${verbaOption === opt ? 'bg-[#1478BE] border-[#1478BE] text-white shadow-[0_0_15px_rgba(20,120,190,0.5)]' : 'bg-[#111] border-[#333] text-[#888] hover:border-[#1478BE] hover:text-white'}`}
+                          className={`py-2 px-1 text-xs sm:text-[12px] font-medium rounded-xl border transition-all ${verbaOption === opt ? 'bg-[#1478BE] border-[#1478BE] text-white shadow-[0_0_15px_rgba(20,120,190,0.5)]' : 'bg-[#111] border-[#333] text-[#888] hover:border-[#1478BE] hover:text-white'}`}
                         >
                           {opt === 'Outro' ? opt : `R$ ${opt}`}
                         </motion.button>
@@ -391,19 +391,19 @@ function App() {
                     </div>
                     {verbaOption === 'Outro' && (
                       <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="relative mt-2">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#888] text-sm">R$</span>
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#888] text-lg">R$</span>
                         <input 
                           type="number" 
                           placeholder="Ex: 5000" 
                           value={verbaCustom}
                           onChange={(e) => setVerbaCustom(e.target.value)}
-                          className="w-full bg-[#111] border border-[#1478BE] rounded-xl pl-10 pr-4 py-3 text-[0.9rem] text-white placeholder-[#555] focus:outline-none shadow-[0_0_15px_rgba(20,120,190,0.2)] transition-all focus:scale-[1.02]"
+                          className="w-full bg-[#111] border border-[#1478BE] rounded-xl pl-10 pr-4 py-3 text-base text-white placeholder-[#555] focus:outline-none shadow-[0_0_15px_rgba(20,120,190,0.2)] transition-all focus:scale-[1.02]"
                         />
                       </motion.div>
                     )}
                   </div>
                   <div>
-                    <label className="text-[11px] text-[#888] uppercase tracking-wider mb-2 block">O que você precisa?</label>
+                    <label className="text-xs text-[#888] uppercase tracking-wider mb-2 block">O que você precisa?</label>
                     <div className="flex flex-wrap gap-2">
                       {['Site / Landing Page', 'Estratégia de Vendas', 'Gestão de Instagram', 'Tráfego Pago', 'Outro'].map(svc => (
                         <motion.button 
@@ -411,7 +411,7 @@ function App() {
                           type="button"
                           whileTap={{ scale: 0.95 }}
                           onClick={() => setServicos(prev => prev.includes(svc) ? prev.filter(s => s !== svc) : [...prev, svc])}
-                          className={`px-3 py-1.5 text-[11px] font-medium rounded-full border transition-all ${servicos.includes(svc) ? 'bg-[#1478BE] border-[#1478BE] text-white shadow-[0_0_15px_rgba(20,120,190,0.5)]' : 'bg-[#111] border-[#333] text-[#888] hover:border-[#1478BE] hover:text-white'}`}
+                          className={`px-3 py-1.5 text-xs font-medium rounded-full border transition-all ${servicos.includes(svc) ? 'bg-[#1478BE] border-[#1478BE] text-white shadow-[0_0_15px_rgba(20,120,190,0.5)]' : 'bg-[#111] border-[#333] text-[#888] hover:border-[#1478BE] hover:text-white'}`}
                         >
                           {svc}
                         </motion.button>
@@ -423,7 +423,7 @@ function App() {
                     type="submit" 
                     disabled={isSubmitting}
                     whileTap={{ scale: 0.97 }}
-                    className={`mt-4 w-full py-4 rounded-xl font-bold text-[0.95rem] transition-all bg-[#1478BE] text-white shadow-[0_0_30px_rgba(20,120,190,0.4)] hover:bg-[#5bb3f0] ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}`}
+                    className={`mt-4 w-full py-4 rounded-xl font-bold text-lg transition-all bg-[#1478BE] text-white shadow-[0_0_30px_rgba(20,120,190,0.4)] hover:bg-[#5bb3f0] ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}`}
                   >
                     {isSubmitting ? 'Enviando...' : 'Solicitar Diagnóstico Agora'}
                   </motion.button>
@@ -464,14 +464,14 @@ function App() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="flex-1 text-center lg:text-left"
           >
-            <span className="font-black tracking-tight text-sm md:text-base text-[#5bb3f0] uppercase tracking-[0.1em] mb-4 block">Atendimento 24/7</span>
+            <span className="font-black tracking-tight text-lg md:text-lg text-[#5bb3f0] uppercase tracking-[0.1em] mb-4 block">Atendimento 24/7</span>
             <TextEffect as="h2" preset="blur" per="word" className="font-black tracking-tight text-3xl md:text-5xl font-semibold leading-tight mb-6 tracking-tight">
               {"Tire suas dúvidas\nagora mesmo."}
             </TextEffect>
-            <p className="text-[#cccccc] text-[0.95rem] md:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed mb-8">
+            <p className="text-[#cccccc] text-lg md:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed mb-8">
               Desenvolvemos assistentes virtuais inteligentes que conversam com seus clientes, quebram objeções e fecham vendas de forma automática enquanto você dorme.
             </p>
-            <p className="text-[#888] text-sm flex items-center justify-center lg:justify-start gap-2">
+            <p className="text-[#888] text-lg flex items-center justify-center lg:justify-start gap-2">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
               Teste na prática conversando com a nossa IA ao lado.
             </p>
@@ -511,7 +511,7 @@ function App() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <span className="font-black tracking-tight text-sm md:text-base text-[#5bb3f0] uppercase tracking-[0.1em] mb-4 block">A Realidade Nua e Crua</span>
+            <span className="font-black tracking-tight text-lg md:text-lg text-[#5bb3f0] uppercase tracking-[0.1em] mb-4 block">A Realidade Nua e Crua</span>
             <TextEffect as="h2" preset="blur" per="word" className="font-black tracking-tight text-3xl md:text-5xl font-semibold leading-tight mb-6 tracking-tight max-w-3xl">
               {"A sua empresa parou no tempo.\nE o seu concorrente agradece."}
             </TextEffect>
@@ -532,7 +532,7 @@ function App() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#1478BE]/10 blur-[100px] rounded-full pointer-events-none"></div>
         <div className="container relative z-10 flex flex-col items-center">
           <div className="text-center max-w-3xl mx-auto mb-10">
-            <span className="font-black tracking-tight text-sm md:text-base text-[#5bb3f0] uppercase tracking-[0.15em] mb-4 block font-bold">O Nosso Processo</span>
+            <span className="font-black tracking-tight text-lg md:text-lg text-[#5bb3f0] uppercase tracking-[0.15em] mb-4 block font-bold">O Nosso Processo</span>
             <TextEffect as="h2" preset="blur" per="word" className="font-black tracking-tight text-4xl md:text-5xl font-bold leading-tight tracking-tight mb-6">
               {"Como funciona o nosso\nprocesso na prática."}
             </TextEffect>
@@ -554,7 +554,7 @@ function App() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <span className="font-black tracking-tight text-sm md:text-base text-[#5bb3f0] uppercase tracking-[0.1em] mb-4 block">O Que Entregamos</span>
+            <span className="font-black tracking-tight text-lg md:text-lg text-[#5bb3f0] uppercase tracking-[0.1em] mb-4 block">O Que Entregamos</span>
             <TextEffect as="h2" preset="blur" per="word" className="font-black tracking-tight text-3xl md:text-5xl font-semibold leading-tight mb-10 md:mb-16 tracking-tight">
               {"O arsenal completo\npara dominar seu mercado"}
             </TextEffect>
@@ -596,7 +596,7 @@ function App() {
           transition={{ duration: 0.7 }}
           className="container max-w-3xl bg-black/50 backdrop-blur-xl border border-[#333333] rounded-3xl p-6 md:p-12 shadow-xl"
         >
-          <span className="font-black tracking-tight text-sm md:text-base text-[#5bb3f0] uppercase tracking-[0.1em] mb-4 block text-center">Papo Reto</span>
+          <span className="font-black tracking-tight text-lg md:text-lg text-[#5bb3f0] uppercase tracking-[0.1em] mb-4 block text-center">Papo Reto</span>
           <TextEffect as="h2" preset="blur" per="word" className="font-black tracking-tight text-3xl md:text-5xl font-semibold leading-tight mb-10 md:mb-16 tracking-tight text-center">
             Dúvidas Comuns
           </TextEffect>
@@ -635,7 +635,7 @@ function App() {
       </section>
 
       {/* FOOTER */}
-      <footer className="text-center py-10 border-t border-[#222222] text-[#888888] bg-black/60 backdrop-blur-sm text-sm">
+      <footer className="text-center py-10 border-t border-[#222222] text-[#888888] bg-black/60 backdrop-blur-sm text-lg">
         <p>© 2026 Alpe Marketing. Estratégia e Performance.</p>
       </footer>
 
@@ -651,7 +651,7 @@ function App() {
             <motion.a 
               href="#form-diagnostico" 
               whileTap={{ scale: 0.95 }}
-              className="flex items-center justify-center w-full py-4 rounded-xl font-bold text-[0.95rem] transition-all bg-[#1478BE] text-white shadow-[0_0_40px_rgba(20,120,190,0.8)] animate-pulse"
+              className="flex items-center justify-center w-full py-4 rounded-xl font-bold text-lg transition-all bg-[#1478BE] text-white shadow-[0_0_40px_rgba(20,120,190,0.8)] animate-pulse"
             >
               Agendar Diagnóstico Gratuito
             </motion.a>
